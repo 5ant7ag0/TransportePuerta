@@ -71,6 +71,27 @@ class Pedido(db.Model):
     fecha_creacion = db.Column(db.DateTime, default=datetime.utcnow)
     fecha_actualizacion = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'tracking_code': self.tracking_code,
+            'usuario_id': self.usuario_id,
+            'origen': self.origen,
+            'destino': self.destino,
+            'descripcion': self.descripcion,
+            'peso_kg': self.peso_kg,
+            'distancia_km': self.distancia_km,
+            'tipo_servicio': self.tipo_servicio,
+            'precio_total': self.precio_total,
+            'estado': self.estado,
+            'nombre_remitente': self.nombre_remitente,
+            'telefono_remitente': self.telefono_remitente,
+            'nombre_destinatario': self.nombre_destinatario,
+            'telefono_destinatario': self.telefono_destinatario,
+            'fecha_creacion': self.fecha_creacion.isoformat() if self.fecha_creacion else None,
+            'fecha_actualizacion': self.fecha_actualizacion.isoformat() if self.fecha_actualizacion else None
+        }
+
 
 class Reserva(db.Model):
     __tablename__ = 'reservas'

@@ -3,11 +3,13 @@ from functools import wraps
 
 from flask import Flask, render_template, redirect, url_for, flash, request, jsonify
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from flask_cors import CORS
 
 from config import Config
 from models import db, Usuario, Pedido, Reserva, Contacto, Cotizacion
 
 app = Flask(__name__)
+CORS(app)
 app.config.from_object(Config)
 
 db.init_app(app)
@@ -145,6 +147,57 @@ def api_cotizar():
         'multiplicador': multiplicador,
         'precio_total': round(precio_total, 2),
     })
+
+
+@app.route('/api/pedidos', methods=['GET', 'POST'])
+def api_pedidos():
+    """API endpoint para listar y crear pedidos."""
+    if request.method == 'POST':
+        data = request.get_json()
+        
+        distancia = float(data.get('distancia_km', 0))
+        peso = float(data.get('peso_kg', 0))
+        tipo = data.get('tipo_servicio', 'paqueteria')
+
+        precio_distancia = distancia * app.config['PRECIO_POR_KM']
+        precio_peso = peso * app.config['PRECIO_POR_KG']
+        precio_total = precio_distancia + precio_peso
+
+        multiplicadores = {
+            'paqueteria': 1.0, 'mudanza': 1.5, 'personas': 0.8,
+            'express': 2.0, 'carga_pesada': 1.8, 'delivery': 1.2,
+        }
+        precio_total *= multiplicadores.get(tipo, 1.0)
+
+        nuevo_pedido = Pedido(
+            origen=data.get('origen'),
+            destino=data.get('destino'),
+            descripcion=data.get('descripcion', ''),
+            peso_kg=peso,
+            distancia_km=distancia,
+            tipo_servicio=tipo,
+            precio_total=round(precio_total, 2),
+            nombre_remitente=data.get('nombre_remitente', ''),
+            telefono_remitente=data.get('telefono_remitente', ''),
+            nombre_destinatario=data.get('nombre_destinatario', ''),
+            telefono_destinatario=data.get('telefono_destinatario', ''),
+            estado='Pendiente'
+        )
+        db.session.add(nuevo_pedido)
+        db.session.commit()
+        return jsonify(nuevo_pedido.to_dict()), 201
+
+    pedidos = Pedido.query.order_by(Pedido.fecha_creacion.desc()).all()
+    return jsonify([pedido.to_dict() for pedido in pedidos])
+
+
+@app.route('/api/rastreo/<string:tracking_code>', methods=['GET'])
+def api_rastreo(tracking_code):
+    """API endpoint para rastrear un pedido por su código."""
+    pedido = Pedido.query.filter_by(tracking_code=tracking_code.upper()).first()
+    if not pedido:
+        return jsonify({'error': 'Pedido no encontrado'}), 404
+    return jsonify(pedido.to_dict()), 200
 
 
 @app.route('/contacto', methods=['GET', 'POST'])
@@ -448,4 +501,4 @@ def init_db():
 
 if __name__ == '__main__':
     init_db()
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=5001)
