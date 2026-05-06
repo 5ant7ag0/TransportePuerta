@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Contacto{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <h1 class="page-title">Contáctanos</h1>
+        <p class="page-subtitle">Estamos para servirte 24/7</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="contact-wrapper">
+            <div class="contact-info-side">
+                <h2>Información de <span class="text-gradient">Contacto</span></h2>
+                <p>No dudes en comunicarte con nosotros por cualquier medio.</p>
+                <div class="contact-items">
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div><strong>Dirección</strong><p>{{ direccion }}</p></div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                        <div><strong>Teléfono</strong><p>{{ telefono }}</p></div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                        <div><strong>Email</strong><p>{{ email_contacto }}</p></div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
+                        <div><strong>WhatsApp</strong><p>{{ telefono }}</p></div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-clock"></i></div>
+                        <div><strong>Horario</strong><p>24 horas, 7 días a la semana</p></div>
+                    </div>
+                </div>
+                <div class="contact-social">
+                    <a href="{{ facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="{{ instagram }}" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="{{ tiktok }}" target="_blank"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="contact-form-side">
+                <div class="form-card">
+                    <div class="form-card-header">
+                        <i class="fas fa-paper-plane"></i>
+                        <h2>Envíanos un Mensaje</h2>
+                    </div>
+                    <form method="POST" action="{{ url_for('contacto') }}">
+                        <div class="form-group">
+                            <label for="nombre">Nombre *</label>
+                            <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" required placeholder="correo@ejemplo.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="telefono">Teléfono</label>
+                                <input type="tel" id="telefono" name="telefono" placeholder="+593 99 999 9999">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="asunto">Asunto</label>
+                            <input type="text" id="asunto" name="asunto" placeholder="¿En qué podemos ayudarte?">
+                        </div>
+                        <div class="form-group">
+                            <label for="mensaje">Mensaje *</label>
+                            <textarea id="mensaje" name="mensaje" rows="5" required placeholder="Escribe tu mensaje aquí..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full btn-lg">
+                            <i class="fas fa-paper-plane"></i> Enviar Mensaje
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

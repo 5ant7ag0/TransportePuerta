@@ -1,0 +1,311 @@
+{% extends "base.html" %}
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<!-- HERO SECTION -->
+<section class="hero" id="hero">
+    <div class="hero-bg">
+        <img src="{{ url_for('static', filename='images/hero_banner.png') }}" alt="Transporte Puerta a Puerta">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <div class="hero-badge animate-fade-in">
+            <i class="fas fa-bolt"></i> Servicio 24/7 en todo Ecuador
+        </div>
+        <h1 class="hero-title animate-fade-in">
+            Tu envío llega <span class="text-gradient">rápido como el rayo</span>
+        </h1>
+        <p class="hero-subtitle animate-fade-in">
+            Transporte de puerta a puerta en todo Ecuador. Paquetería, mudanzas, 
+            mensajería express y más. ¡Confía en los más rápidos!
+        </p>
+        <div class="hero-mascot animate-bounce-in">
+            <img src="{{ url_for('static', filename='images/flash_mascot.png') }}" alt="Mascota Puerta a Puerta" class="mascot-img">
+        </div>
+        <div class="hero-actions animate-fade-in">
+            <a href="{{ url_for('cotizacion') }}" class="btn btn-primary btn-lg">
+                <i class="fas fa-calculator"></i> Cotizar Ahora
+            </a>
+            <a href="{{ url_for('reservar') }}" class="btn btn-outline btn-lg">
+                <i class="fas fa-calendar-check"></i> Reservar Servicio
+            </a>
+        </div>
+        <div class="hero-stats animate-fade-in">
+            <div class="stat-item">
+                <span class="stat-number" data-count="5000">0</span>+
+                <span class="stat-label">Envíos realizados</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-count="24">0</span>
+                <span class="stat-label">Provincias</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-count="98">0</span>%
+                <span class="stat-label">Satisfacción</span>
+            </div>
+        </div>
+    </div>
+    <div class="hero-scroll">
+        <a href="#servicios-preview"><i class="fas fa-chevron-down"></i></a>
+    </div>
+</section>
+
+<!-- SERVICIOS PREVIEW -->
+<section class="section services-preview" id="servicios-preview">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge"><i class="fas fa-truck"></i> Nuestros Servicios</span>
+            <h2 class="section-title">Todo lo que necesitas, <span class="text-gradient">de puerta a puerta</span></h2>
+            <p class="section-subtitle">Ofrecemos soluciones de transporte completas para todo Ecuador</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card" data-aos="fade-up">
+                <div class="service-icon">
+                    <i class="fas fa-box"></i>
+                </div>
+                <h3>Envío de Paquetes</h3>
+                <p>Enviamos tu paquete a cualquier rincón de Ecuador de forma segura y rápida.</p>
+                <span class="service-price">Desde $8.00</span>
+            </div>
+            <div class="service-card" data-aos="fade-up" data-delay="100">
+                <div class="service-icon icon-green">
+                    <i class="fas fa-truck-moving"></i>
+                </div>
+                <h3>Mudanzas</h3>
+                <p>Mudanza completa con personal capacitado y vehículos adecuados.</p>
+                <span class="service-price">Cotización personalizada</span>
+            </div>
+            <div class="service-card" data-aos="fade-up" data-delay="200">
+                <div class="service-icon icon-purple">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Transporte de Personas</h3>
+                <p>Viaja cómodo y seguro a cualquier ciudad del país.</p>
+                <span class="service-price">Desde $4.00/km</span>
+            </div>
+            <div class="service-card" data-aos="fade-up" data-delay="300">
+                <div class="service-icon icon-orange">
+                    <i class="fas fa-shipping-fast"></i>
+                </div>
+                <h3>Mensajería Express</h3>
+                <p>Entregas urgentes en el menor tiempo posible. ¡Rápido como el rayo!</p>
+                <span class="service-price">Desde $10.00</span>
+            </div>
+            <div class="service-card" data-aos="fade-up" data-delay="400">
+                <div class="service-icon icon-red">
+                    <i class="fas fa-weight-hanging"></i>
+                </div>
+                <h3>Carga Pesada</h3>
+                <p>Transporte de carga pesada con equipos especializados.</p>
+                <span class="service-price">Cotización personalizada</span>
+            </div>
+            <div class="service-card" data-aos="fade-up" data-delay="500">
+                <div class="service-icon icon-teal">
+                    <i class="fas fa-building"></i>
+                </div>
+                <h3>Delivery Empresarial</h3>
+                <p>Soluciones de entrega para empresas con tarifas preferenciales.</p>
+                <span class="service-price">Planes desde $150/mes</span>
+            </div>
+        </div>
+        <div class="section-cta">
+            <a href="{{ url_for('servicios') }}" class="btn btn-primary">Ver todos los servicios <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+
+<!-- COTIZACIÓN RÁPIDA -->
+<section class="section quote-section">
+    <div class="container">
+        <div class="quote-wrapper">
+            <div class="quote-info">
+                <span class="section-badge badge-light"><i class="fas fa-calculator"></i> Cotización Rápida</span>
+                <h2>Calcula tu tarifa <span class="text-gradient-light">al instante</span></h2>
+                <p>Ingresa los datos de tu envío y obtén el precio estimado en segundos.</p>
+                <div class="quote-features">
+                    <div class="quote-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span><strong>$5.00</strong> por kilómetro</span>
+                    </div>
+                    <div class="quote-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span><strong>$3.00</strong> por kilogramo</span>
+                    </div>
+                    <div class="quote-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Sin costos ocultos</span>
+                    </div>
+                    <div class="quote-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Precios competitivos</span>
+                    </div>
+                </div>
+            </div>
+            <div class="quote-form-box">
+                <form id="quickQuoteForm" class="quote-form">
+                    <div class="form-group">
+                        <label for="qq_tipo">Tipo de Servicio</label>
+                        <select id="qq_tipo" name="tipo_servicio" required>
+                            <option value="paqueteria">📦 Envío de Paquetes</option>
+                            <option value="mudanza">🚚 Mudanza</option>
+                            <option value="personas">👥 Transporte de Personas</option>
+                            <option value="express">⚡ Mensajería Express</option>
+                            <option value="carga_pesada">🏗️ Carga Pesada</option>
+                            <option value="delivery">🏢 Delivery Empresarial</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="qq_distancia">Distancia (km)</label>
+                            <input type="number" id="qq_distancia" name="distancia" min="1" step="0.1" placeholder="Ej: 15" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="qq_peso">Peso (kg)</label>
+                            <input type="number" id="qq_peso" name="peso" min="0" step="0.1" placeholder="Ej: 5">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <i class="fas fa-calculator"></i> Calcular Precio
+                    </button>
+                </form>
+                <div id="quoteResult" class="quote-result hidden">
+                    <div class="quote-result-header">
+                        <i class="fas fa-receipt"></i>
+                        <span>Precio Estimado</span>
+                    </div>
+                    <div class="quote-price">
+                        $<span id="quotePrice">0.00</span>
+                    </div>
+                    <div class="quote-breakdown">
+                        <div><span>Distancia:</span> <span>$<span id="qDistPrice">0</span></span></div>
+                        <div><span>Peso:</span> <span>$<span id="qWeightPrice">0</span></span></div>
+                        <div><span>Multiplicador:</span> <span>x<span id="qMultiplier">1</span></span></div>
+                    </div>
+                    <a href="{{ url_for('cotizacion') }}" class="btn btn-outline btn-full">Cotización Detallada</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- POR QUÉ ELEGIRNOS -->
+<section class="section why-us">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge"><i class="fas fa-star"></i> ¿Por qué elegirnos?</span>
+            <h2 class="section-title">La mejor opción en <span class="text-gradient">transporte ecuatoriano</span></h2>
+        </div>
+        <div class="why-grid">
+            <div class="why-card">
+                <div class="why-icon"><i class="fas fa-clock"></i></div>
+                <h3>24/7 Disponible</h3>
+                <p>Trabajamos todos los días, las 24 horas. Siempre listos para servirte.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon"><i class="fas fa-shield-alt"></i></div>
+                <h3>Seguridad Garantizada</h3>
+                <p>Tu carga está protegida durante todo el trayecto con nuestro seguro.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon"><i class="fas fa-map-marked-alt"></i></div>
+                <h3>Cobertura Nacional</h3>
+                <p>Llegamos a las 24 provincias de Ecuador. De puerta a puerta.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon"><i class="fas fa-dollar-sign"></i></div>
+                <h3>Precios Justos</h3>
+                <p>Tarifas competitivas y transparentes. Sin costos ocultos.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon"><i class="fas fa-headset"></i></div>
+                <h3>Soporte Directo</h3>
+                <p>Comunícate con nosotros por WhatsApp en cualquier momento.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon"><i class="fas fa-bolt"></i></div>
+                <h3>Rapidez</h3>
+                <p>Entregas en el menor tiempo posible. ¡Rápidos como Flash!</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section class="section testimonials-section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge"><i class="fas fa-quote-left"></i> Testimonios</span>
+            <h2 class="section-title">Lo que dicen <span class="text-gradient">nuestros clientes</span></h2>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p>"Excelente servicio. Mi paquete llegó de Quito a Guayaquil en menos de 24 horas. Muy recomendados."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar"><i class="fas fa-user"></i></div>
+                    <div>
+                        <strong>María García</strong>
+                        <span>Quito</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p>"Hicieron mi mudanza de forma impecable. Todo llegó en perfecto estado. El equipo fue muy profesional."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar"><i class="fas fa-user"></i></div>
+                    <div>
+                        <strong>Carlos Mendoza</strong>
+                        <span>Cuenca</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                </div>
+                <p>"El servicio express es increíble. Necesitaba enviar documentos urgentes y llegaron el mismo día. ¡Gracias!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar"><i class="fas fa-user"></i></div>
+                    <div>
+                        <strong>Ana Rodríguez</strong>
+                        <span>Ambato</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="section cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2>¿Listo para enviar tu paquete?</h2>
+            <p>Cotiza gratis y reserva tu servicio en minutos. ¡Estamos a un clic de distancia!</p>
+            <div class="cta-actions">
+                <a href="{{ url_for('reservar') }}" class="btn btn-primary btn-lg"><i class="fas fa-rocket"></i> Reservar Ahora</a>
+                <a href="https://wa.me/{{ whatsapp }}" class="btn btn-whatsapp btn-lg" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EQUIPO -->
+<section class="section team-section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge"><i class="fas fa-users"></i> Nuestro Equipo</span>
+            <h2 class="section-title">Profesionales <span class="text-gradient">comprometidos</span></h2>
+            <p class="section-subtitle">Nuestro equipo trabaja día y noche para que tus envíos lleguen a tiempo</p>
+        </div>
+        <div class="team-image-wrapper">
+            <img src="{{ url_for('static', filename='images/team_photo.png') }}" alt="Equipo Puerta a Puerta" class="team-image">
+        </div>
+    </div>
+</section>
+{% endblock %}

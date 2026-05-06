@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Admin - Pedidos{% endblock %}
+
+{% block content %}
+<section class="page-hero admin-hero">
+    <div class="container">
+        <h1 class="page-title"><i class="fas fa-box"></i> Gestión de <span class="text-gradient">Pedidos</span></h1>
+        <div class="page-actions">
+            <a href="{{ url_for('admin_nuevo_pedido') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Nuevo Pedido</a>
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Volver</a>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Origen → Destino</th>
+                        <th>Servicio</th>
+                        <th>Precio</th>
+                        <th>Estado</th>
+                        <th>Fecha</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in pedidos %}
+                    <tr>
+                        <td><strong>{{ p.tracking_code }}</strong></td>
+                        <td>{{ p.origen }} → {{ p.destino }}</td>
+                        <td>{{ p.tipo_servicio|capitalize }}</td>
+                        <td>${{ "%.2f"|format(p.precio_total) }}</td>
+                        <td><span class="status-badge status-{{ p.estado|lower|replace(' ', '-') }}">{{ p.estado }}</span></td>
+                        <td>{{ p.fecha_creacion.strftime('%d/%m/%Y') }}</td>
+                        <td>
+                            <form method="POST" action="{{ url_for('admin_actualizar_estado', id=p.id) }}" class="inline-form">
+                                <select name="estado" class="select-sm">
+                                    <option value="Pendiente" {{ 'selected' if p.estado == 'Pendiente' }}>Pendiente</option>
+                                    <option value="Recogido" {{ 'selected' if p.estado == 'Recogido' }}>Recogido</option>
+                                    <option value="En tránsito" {{ 'selected' if p.estado == 'En tránsito' }}>En tránsito</option>
+                                    <option value="En destino" {{ 'selected' if p.estado == 'En destino' }}>En destino</option>
+                                    <option value="Entregado" {{ 'selected' if p.estado == 'Entregado' }}>Entregado</option>
+                                    <option value="Cancelado" {{ 'selected' if p.estado == 'Cancelado' }}>Cancelado</option>
+                                </select>
+                                <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa-save"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% if not pedidos %}
+        <div class="empty-state"><i class="fas fa-inbox"></i><p>No hay pedidos registrados aún.</p></div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

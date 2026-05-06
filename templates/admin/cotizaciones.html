@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Admin - Cotizaciones{% endblock %}
+
+{% block content %}
+<section class="page-hero admin-hero">
+    <div class="container">
+        <h1 class="page-title"><i class="fas fa-calculator"></i> <span class="text-gradient">Cotizaciones</span></h1>
+        <div class="page-actions">
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Volver</a>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr><th>ID</th><th>Cliente</th><th>Ruta</th><th>Servicio</th><th>Distancia</th><th>Peso</th><th>Precio</th><th>Fecha</th></tr>
+                </thead>
+                <tbody>
+                    {% for c in cotizaciones %}
+                    <tr>
+                        <td>{{ c.id }}</td>
+                        <td>{{ c.nombre or '-' }}<br><small>{{ c.email or '' }}</small></td>
+                        <td>{{ c.origen or '-' }} → {{ c.destino or '-' }}</td>
+                        <td>{{ c.tipo_servicio|capitalize }}</td>
+                        <td>{{ c.distancia_km }} km</td>
+                        <td>{{ c.peso_kg }} kg</td>
+                        <td><strong>${{ "%.2f"|format(c.precio_estimado) }}</strong></td>
+                        <td>{{ c.fecha_creacion.strftime('%d/%m/%Y') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% if not cotizaciones %}<div class="empty-state"><i class="fas fa-calculator"></i><p>No hay cotizaciones registradas.</p></div>{% endif %}
+    </div>
+</section>
+{% endblock %}

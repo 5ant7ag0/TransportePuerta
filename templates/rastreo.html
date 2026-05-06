@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Rastreo{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <h1 class="page-title">Rastreo de <span class="text-gradient">Pedidos</span></h1>
+        <p class="page-subtitle">Ingresa tu código de seguimiento</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="tracking-wrapper">
+            <div class="tracking-search">
+                <div class="form-card">
+                    <div class="form-card-header">
+                        <i class="fas fa-search-location"></i>
+                        <h2>Buscar Pedido</h2>
+                    </div>
+                    <form method="POST" action="{{ url_for('rastreo') }}">
+                        <div class="form-group">
+                            <label for="tracking_code">Código de Rastreo</label>
+                            <input type="text" id="tracking_code" name="tracking_code" placeholder="Ej: PAP-AB12CD34" required style="text-transform: uppercase;">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full btn-lg">
+                            <i class="fas fa-search"></i> Rastrear Pedido
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            {% if pedido %}
+            <div class="tracking-result">
+                <div class="result-card">
+                    <div class="tracking-header">
+                        <div>
+                            <h3>Pedido {{ pedido.tracking_code }}</h3>
+                            <span class="tracking-date">{{ pedido.fecha_creacion.strftime('%d/%m/%Y %H:%M') }}</span>
+                        </div>
+                        <span class="status-badge status-{{ pedido.estado|lower|replace(' ', '-') }}">{{ pedido.estado }}</span>
+                    </div>
+                    <div class="tracking-progress">
+                        {% set estados = ['Pendiente', 'Recogido', 'En tránsito', 'En destino', 'Entregado'] %}
+                        {% set estado_idx = estados.index(pedido.estado) if pedido.estado in estados else 0 %}
+                        <div class="progress-bar"><div class="progress-fill" style="width: {{ (estado_idx / 4 * 100)|int }}%"></div></div>
+                        <div class="progress-steps">
+                            {% for estado in estados %}
+                            <div class="progress-step {{ 'active' if loop.index0 <= estado_idx else '' }}">
+                                <div class="step-dot"></div>
+                                <span>{{ estado }}</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="tracking-details">
+                        <div class="detail-row">
+                            <div class="detail-item"><span class="detail-label"><i class="fas fa-map-marker-alt"></i> Origen</span><span class="detail-value">{{ pedido.origen }}</span></div>
+                            <div class="detail-item"><span class="detail-label"><i class="fas fa-flag-checkered"></i> Destino</span><span class="detail-value">{{ pedido.destino }}</span></div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-item"><span class="detail-label"><i class="fas fa-truck"></i> Servicio</span><span class="detail-value">{{ pedido.tipo_servicio|capitalize }}</span></div>
+                            <div class="detail-item"><span class="detail-label"><i class="fas fa-dollar-sign"></i> Total</span><span class="detail-value">${{ "%.2f"|format(pedido.precio_total) }}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Mi Panel{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <h1 class="page-title">Bienvenido, <span class="text-gradient">{{ current_user.nombre }}</span></h1>
+        <p class="page-subtitle">Panel de cliente</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="dashboard-grid">
+            <div class="dash-card">
+                <div class="dash-card-icon"><i class="fas fa-box"></i></div>
+                <div class="dash-card-info">
+                    <h3>{{ pedidos|length }}</h3>
+                    <span>Mis Pedidos</span>
+                </div>
+            </div>
+            <div class="dash-card">
+                <div class="dash-card-icon icon-green"><i class="fas fa-calendar"></i></div>
+                <div class="dash-card-info">
+                    <h3>{{ reservas|length }}</h3>
+                    <span>Mis Reservas</span>
+                </div>
+            </div>
+        </div>
+
+        {% if pedidos %}
+        <div class="section-block">
+            <h2><i class="fas fa-box"></i> Mis Pedidos</h2>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Origen</th>
+                            <th>Destino</th>
+                            <th>Servicio</th>
+                            <th>Precio</th>
+                            <th>Estado</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in pedidos %}
+                        <tr>
+                            <td><strong>{{ p.tracking_code }}</strong></td>
+                            <td>{{ p.origen }}</td>
+                            <td>{{ p.destino }}</td>
+                            <td>{{ p.tipo_servicio|capitalize }}</td>
+                            <td>${{ "%.2f"|format(p.precio_total) }}</td>
+                            <td><span class="status-badge status-{{ p.estado|lower|replace(' ', '-') }}">{{ p.estado }}</span></td>
+                            <td>{{ p.fecha_creacion.strftime('%d/%m/%Y') }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if reservas %}
+        <div class="section-block">
+            <h2><i class="fas fa-calendar"></i> Mis Reservas</h2>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Servicio</th>
+                            <th>Fecha Servicio</th>
+                            <th>Origen</th>
+                            <th>Destino</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for r in reservas %}
+                        <tr>
+                            <td>{{ r.id }}</td>
+                            <td>{{ r.tipo_servicio|capitalize }}</td>
+                            <td>{{ r.fecha_servicio.strftime('%d/%m/%Y %H:%M') }}</td>
+                            <td>{{ r.origen }}</td>
+                            <td>{{ r.destino }}</td>
+                            <td><span class="status-badge status-{{ r.estado|lower }}">{{ r.estado }}</span></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

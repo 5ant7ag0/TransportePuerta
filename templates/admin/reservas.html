@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Admin - Reservas{% endblock %}
+
+{% block content %}
+<section class="page-hero admin-hero">
+    <div class="container">
+        <h1 class="page-title"><i class="fas fa-calendar-check"></i> Gestión de <span class="text-gradient">Reservas</span></h1>
+        <div class="page-actions">
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Volver</a>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr><th>#</th><th>Cliente</th><th>Servicio</th><th>Fecha</th><th>Ruta</th><th>Estado</th><th>Acciones</th></tr>
+                </thead>
+                <tbody>
+                    {% for r in reservas %}
+                    <tr>
+                        <td>{{ r.id }}</td>
+                        <td>{{ r.nombre_cliente }}<br><small>{{ r.telefono_cliente }}</small></td>
+                        <td>{{ r.tipo_servicio|capitalize }}</td>
+                        <td>{{ r.fecha_servicio.strftime('%d/%m/%Y %H:%M') }}</td>
+                        <td>{{ r.origen }} → {{ r.destino }}</td>
+                        <td><span class="status-badge status-{{ r.estado|lower }}">{{ r.estado }}</span></td>
+                        <td>
+                            <form method="POST" action="{{ url_for('admin_actualizar_reserva', id=r.id) }}" class="inline-form">
+                                <select name="estado" class="select-sm">
+                                    <option value="Pendiente" {{ 'selected' if r.estado == 'Pendiente' }}>Pendiente</option>
+                                    <option value="Confirmada" {{ 'selected' if r.estado == 'Confirmada' }}>Confirmada</option>
+                                    <option value="En proceso" {{ 'selected' if r.estado == 'En proceso' }}>En proceso</option>
+                                    <option value="Completada" {{ 'selected' if r.estado == 'Completada' }}>Completada</option>
+                                    <option value="Cancelada" {{ 'selected' if r.estado == 'Cancelada' }}>Cancelada</option>
+                                </select>
+                                <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa-save"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% if not reservas %}<div class="empty-state"><i class="fas fa-calendar-times"></i><p>No hay reservas registradas.</p></div>{% endif %}
+    </div>
+</section>
+{% endblock %}

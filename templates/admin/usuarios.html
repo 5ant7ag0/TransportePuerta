@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Admin - Usuarios{% endblock %}
+
+{% block content %}
+<section class="page-hero admin-hero">
+    <div class="container">
+        <h1 class="page-title"><i class="fas fa-users"></i> <span class="text-gradient">Usuarios</span> Registrados</h1>
+        <div class="page-actions">
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Volver</a>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr><th>ID</th><th>Nombre</th><th>Email</th><th>Teléfono</th><th>Tipo</th><th>Registro</th></tr>
+                </thead>
+                <tbody>
+                    {% for u in usuarios %}
+                    <tr>
+                        <td>{{ u.id }}</td>
+                        <td>{{ u.nombre }}</td>
+                        <td>{{ u.email }}</td>
+                        <td>{{ u.telefono or '-' }}</td>
+                        <td>{% if u.es_admin %}<span class="status-badge status-admin">Admin</span>{% else %}<span class="status-badge status-cliente">Cliente</span>{% endif %}</td>
+                        <td>{{ u.fecha_registro.strftime('%d/%m/%Y') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

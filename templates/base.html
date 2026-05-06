@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Puerta a Puerta - Servicio de transporte y mensajería en Ecuador. Envío de paquetes, mudanzas, transporte de personas y más. Servicio 24/7 en todo Ecuador.">
+    <meta name="keywords" content="transporte, envíos, mudanzas, paquetería, Ecuador, mensajería express, puerta a puerta">
+    <meta name="author" content="Puerta a Puerta Ecuador">
+    <title>{% block title %}Puerta a Puerta{% endblock %} | Transporte Ecuador</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="{{ url_for('index') }}" class="nav-logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Puerta a Puerta Logo" class="nav-logo-img">
+                <span class="nav-logo-text">Puerta a Puerta</span>
+            </a>
+
+            <button class="nav-toggle" id="navToggle" aria-label="Menú">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="{{ url_for('index') }}" class="nav-link">Inicio</a></li>
+                <li><a href="{{ url_for('servicios') }}" class="nav-link">Servicios</a></li>
+                <li><a href="{{ url_for('cobertura') }}" class="nav-link">Cobertura</a></li>
+                <li><a href="{{ url_for('cotizacion') }}" class="nav-link">Cotización</a></li>
+                <li><a href="{{ url_for('rastreo') }}" class="nav-link">Rastreo</a></li>
+                <li><a href="{{ url_for('reservar') }}" class="nav-link">Reservar</a></li>
+                <li><a href="{{ url_for('contacto') }}" class="nav-link">Contacto</a></li>
+                {% if current_user.is_authenticated %}
+                    {% if current_user.es_admin %}
+                        <li><a href="{{ url_for('admin_dashboard') }}" class="nav-link nav-link-highlight"><i class="fas fa-cog"></i> Admin</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('cliente_dashboard') }}" class="nav-link nav-link-highlight"><i class="fas fa-user"></i> Mi Panel</a></li>
+                    {% endif %}
+                    <li><a href="{{ url_for('logout') }}" class="nav-link"><i class="fas fa-sign-out-alt"></i></a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}" class="nav-link nav-link-highlight"><i class="fas fa-user"></i> Ingresar</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- FLASH MESSAGES -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-container">
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">
+                        <span>{{ message }}</span>
+                        <button class="flash-close" onclick="this.parentElement.remove()">&times;</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- MAIN CONTENT -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <div class="footer-brand">
+                            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="footer-logo-img">
+                            <h3>Puerta a Puerta</h3>
+                        </div>
+                        <p class="footer-desc">Tu servicio de transporte de confianza en todo Ecuador. Rápidos como el rayo ⚡</p>
+                        <div class="footer-social">
+                            <a href="{{ facebook }}" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="{{ instagram }}" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="{{ tiktok }}" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Enlaces</h4>
+                        <ul>
+                            <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                            <li><a href="{{ url_for('servicios') }}">Servicios</a></li>
+                            <li><a href="{{ url_for('nosotros') }}">Nosotros</a></li>
+                            <li><a href="{{ url_for('cotizacion') }}">Cotización</a></li>
+                            <li><a href="{{ url_for('contacto') }}">Contacto</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Servicios</h4>
+                        <ul>
+                            <li><a href="{{ url_for('servicios') }}">Envío de Paquetes</a></li>
+                            <li><a href="{{ url_for('servicios') }}">Mudanzas</a></li>
+                            <li><a href="{{ url_for('servicios') }}">Transporte de Personas</a></li>
+                            <li><a href="{{ url_for('servicios') }}">Mensajería Express</a></li>
+                            <li><a href="{{ url_for('servicios') }}">Carga Pesada</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Contacto</h4>
+                        <ul class="footer-contact">
+                            <li><i class="fas fa-map-marker-alt"></i> {{ direccion }}</li>
+                            <li><i class="fas fa-phone"></i> {{ telefono }}</li>
+                            <li><i class="fas fa-envelope"></i> {{ email_contacto }}</li>
+                            <li><i class="fas fa-clock"></i> 24/7 - Todos los días</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; {{ year }} Puerta a Puerta. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WHATSAPP BUTTON -->
+    <a href="https://wa.me/{{ whatsapp }}?text=Hola%2C%20necesito%20información%20sobre%20sus%20servicios%20de%20transporte" 
+       class="whatsapp-float" target="_blank" aria-label="Chat por WhatsApp" id="whatsappBtn">
+        <i class="fab fa-whatsapp"></i>
+        <span class="whatsapp-tooltip">¡Chatea con nosotros!</span>
+    </a>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Reservar Servicio{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <h1 class="page-title">Reservar <span class="text-gradient">Servicio</span></h1>
+        <p class="page-subtitle">Agenda tu servicio de transporte online</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="form-page-wrapper">
+            <div class="form-card">
+                <div class="form-card-header">
+                    <i class="fas fa-calendar-check"></i>
+                    <h2>Datos de la Reserva</h2>
+                </div>
+                <form method="POST" action="{{ url_for('reservar') }}">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nombre">Nombre Completo *</label>
+                            <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre completo">
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono">Teléfono *</label>
+                            <input type="tel" id="telefono" name="telefono" required placeholder="+593 99 999 9999">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="correo@ejemplo.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="tipo_servicio">Tipo de Servicio *</label>
+                        <select id="tipo_servicio" name="tipo_servicio" required>
+                            <option value="">Selecciona un servicio</option>
+                            <option value="paqueteria">📦 Envío de Paquetes</option>
+                            <option value="mudanza">🚚 Mudanza</option>
+                            <option value="personas">👥 Transporte de Personas</option>
+                            <option value="express">⚡ Mensajería Express</option>
+                            <option value="carga_pesada">🏗️ Carga Pesada</option>
+                            <option value="delivery">🏢 Delivery Empresarial</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha_servicio">Fecha y Hora del Servicio *</label>
+                        <input type="datetime-local" id="fecha_servicio" name="fecha_servicio" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="origen">Dirección de Origen *</label>
+                            <input type="text" id="origen" name="origen" required placeholder="Ciudad y dirección de recogida">
+                        </div>
+                        <div class="form-group">
+                            <label for="destino">Dirección de Destino *</label>
+                            <input type="text" id="destino" name="destino" required placeholder="Ciudad y dirección de entrega">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion">Descripción del Servicio</label>
+                        <textarea id="descripcion" name="descripcion" rows="4" placeholder="Detalles adicionales: cantidad de cajas, objetos frágiles, instrucciones especiales..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full btn-lg">
+                        <i class="fas fa-calendar-check"></i> Confirmar Reserva
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

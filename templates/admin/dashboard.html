@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}Panel Administrativo{% endblock %}
+
+{% block content %}
+<section class="page-hero admin-hero">
+    <div class="container">
+        <h1 class="page-title"><i class="fas fa-cog"></i> Panel <span class="text-gradient">Administrativo</span></h1>
+        <p class="page-subtitle">Gestiona tu negocio desde aquí</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="admin-stats-grid">
+            <div class="admin-stat-card">
+                <div class="admin-stat-icon"><i class="fas fa-box"></i></div>
+                <div class="admin-stat-info">
+                    <h3>{{ total_pedidos }}</h3>
+                    <span>Total Pedidos</span>
+                    <small>{{ pedidos_pendientes }} pendientes</small>
+                </div>
+            </div>
+            <div class="admin-stat-card stat-green">
+                <div class="admin-stat-icon"><i class="fas fa-calendar-check"></i></div>
+                <div class="admin-stat-info">
+                    <h3>{{ total_reservas }}</h3>
+                    <span>Total Reservas</span>
+                    <small>{{ reservas_pendientes }} pendientes</small>
+                </div>
+            </div>
+            <div class="admin-stat-card stat-purple">
+                <div class="admin-stat-icon"><i class="fas fa-envelope"></i></div>
+                <div class="admin-stat-info">
+                    <h3>{{ total_contactos }}</h3>
+                    <span>Mensajes</span>
+                    <small>{{ contactos_no_leidos }} sin leer</small>
+                </div>
+            </div>
+            <div class="admin-stat-card stat-orange">
+                <div class="admin-stat-icon"><i class="fas fa-users"></i></div>
+                <div class="admin-stat-info">
+                    <h3>{{ total_usuarios }}</h3>
+                    <span>Usuarios</span>
+                    <small>Registrados</small>
+                </div>
+            </div>
+            <div class="admin-stat-card stat-teal">
+                <div class="admin-stat-icon"><i class="fas fa-calculator"></i></div>
+                <div class="admin-stat-info">
+                    <h3>{{ total_cotizaciones }}</h3>
+                    <span>Cotizaciones</span>
+                    <small>Realizadas</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-nav-grid">
+            <a href="{{ url_for('admin_pedidos') }}" class="admin-nav-card">
+                <i class="fas fa-box"></i>
+                <h3>Gestionar Pedidos</h3>
+                <p>Ver, crear y actualizar pedidos</p>
+            </a>
+            <a href="{{ url_for('admin_reservas') }}" class="admin-nav-card">
+                <i class="fas fa-calendar-check"></i>
+                <h3>Gestionar Reservas</h3>
+                <p>Revisar y confirmar reservas</p>
+            </a>
+            <a href="{{ url_for('admin_contactos') }}" class="admin-nav-card">
+                <i class="fas fa-envelope"></i>
+                <h3>Mensajes de Contacto</h3>
+                <p>Leer mensajes de clientes</p>
+            </a>
+            <a href="{{ url_for('admin_usuarios') }}" class="admin-nav-card">
+                <i class="fas fa-users"></i>
+                <h3>Usuarios</h3>
+                <p>Ver usuarios registrados</p>
+            </a>
+            <a href="{{ url_for('admin_cotizaciones') }}" class="admin-nav-card">
+                <i class="fas fa-calculator"></i>
+                <h3>Cotizaciones</h3>
+                <p>Historial de cotizaciones</p>
+            </a>
+            <a href="{{ url_for('admin_nuevo_pedido') }}" class="admin-nav-card highlight">
+                <i class="fas fa-plus-circle"></i>
+                <h3>Nuevo Pedido</h3>
+                <p>Crear pedido manualmente</p>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

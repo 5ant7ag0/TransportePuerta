@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Admin - Nuevo Pedido{% endblock %}
+
+{% block content %}
+<section class="page-hero admin-hero">
+    <div class="container">
+        <h1 class="page-title"><i class="fas fa-plus-circle"></i> Nuevo <span class="text-gradient">Pedido</span></h1>
+        <div class="page-actions">
+            <a href="{{ url_for('admin_pedidos') }}" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Volver</a>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="form-page-wrapper">
+            <div class="form-card">
+                <form method="POST" action="{{ url_for('admin_nuevo_pedido') }}">
+                    <h3>Datos del Envío</h3>
+                    <div class="form-row">
+                        <div class="form-group"><label>Origen *</label><input type="text" name="origen" required></div>
+                        <div class="form-group"><label>Destino *</label><input type="text" name="destino" required></div>
+                    </div>
+                    <div class="form-group"><label>Tipo de Servicio *</label>
+                        <select name="tipo_servicio" required>
+                            <option value="paqueteria">Paquetería</option>
+                            <option value="mudanza">Mudanza</option>
+                            <option value="personas">Transporte de Personas</option>
+                            <option value="express">Mensajería Express</option>
+                            <option value="carga_pesada">Carga Pesada</option>
+                            <option value="delivery">Delivery Empresarial</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Distancia (km) *</label><input type="number" name="distancia_km" min="1" step="0.1" required></div>
+                        <div class="form-group"><label>Peso (kg)</label><input type="number" name="peso_kg" min="0" step="0.1" value="0"></div>
+                    </div>
+                    <div class="form-group"><label>Descripción</label><textarea name="descripcion" rows="3"></textarea></div>
+                    <h3>Remitente</h3>
+                    <div class="form-row">
+                        <div class="form-group"><label>Nombre</label><input type="text" name="nombre_remitente"></div>
+                        <div class="form-group"><label>Teléfono</label><input type="tel" name="telefono_remitente"></div>
+                    </div>
+                    <h3>Destinatario</h3>
+                    <div class="form-row">
+                        <div class="form-group"><label>Nombre</label><input type="text" name="nombre_destinatario"></div>
+                        <div class="form-group"><label>Teléfono</label><input type="tel" name="telefono_destinatario"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full btn-lg"><i class="fas fa-save"></i> Crear Pedido</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

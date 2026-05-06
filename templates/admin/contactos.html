@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Admin - Contactos{% endblock %}
+
+{% block content %}
+<section class="page-hero admin-hero">
+    <div class="container">
+        <h1 class="page-title"><i class="fas fa-envelope"></i> Mensajes de <span class="text-gradient">Contacto</span></h1>
+        <div class="page-actions">
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Volver</a>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        {% for c in contactos %}
+        <div class="message-card {{ 'unread' if not c.leido }}">
+            <div class="message-header">
+                <div>
+                    <strong>{{ c.nombre }}</strong> <span class="message-email">{{ c.email }}</span>
+                    {% if not c.leido %}<span class="badge-new">Nuevo</span>{% endif %}
+                </div>
+                <span class="message-date">{{ c.fecha_creacion.strftime('%d/%m/%Y %H:%M') }}</span>
+            </div>
+            {% if c.asunto %}<div class="message-subject">{{ c.asunto }}</div>{% endif %}
+            <div class="message-body">{{ c.mensaje }}</div>
+            <div class="message-actions">
+                {% if c.telefono %}<span><i class="fas fa-phone"></i> {{ c.telefono }}</span>{% endif %}
+                {% if not c.leido %}
+                <form method="POST" action="{{ url_for('admin_marcar_leido', id=c.id) }}" class="inline-form">
+                    <button type="submit" class="btn btn-sm btn-outline"><i class="fas fa-check"></i> Marcar como leído</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% if not contactos %}<div class="empty-state"><i class="fas fa-inbox"></i><p>No hay mensajes.</p></div>{% endif %}
+    </div>
+</section>
+{% endblock %}
