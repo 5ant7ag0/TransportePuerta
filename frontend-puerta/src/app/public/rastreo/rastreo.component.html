@@ -1,0 +1,77 @@
+<div class="section-container">
+  
+  <div class="tracking-hero">
+    <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">Rastrea tu Envío</h1>
+    <p style="font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 0 auto;">
+      Ingresa tu código de rastreo (ej. PAP-XXXXXXXX) para conocer el estado y ubicación exacta de tu paquete en tiempo real.
+    </p>
+
+    <div class="search-box">
+      <input type="text" [(ngModel)]="trackingCode" placeholder="Ingresa tu código de rastreo..." (keyup.enter)="buscarPedido()">
+      <button class="btn-primary" (click)="buscarPedido()" [disabled]="loading || !trackingCode.trim()" style="background-color: var(--primary-green);">
+        {{ loading ? 'Buscando...' : 'Rastrear Paquete' }}
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="error" style="background-color: #fee2e2; color: var(--error); padding: 1.5rem; border-radius: var(--border-radius-lg); text-align: center; font-weight: 500;">
+    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔍</div>
+    {{ error }}
+  </div>
+
+  <div class="card" *ngIf="pedido && !loading" style="animation: fade-in 0.5s ease;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <h2 style="margin: 0; color: var(--primary-dark);">Pedido {{ pedido.tracking_code }}</h2>
+        <p style="margin: 0.5rem 0 0; color: var(--text-light);">Creado el {{ pedido.fecha_creacion | date:'dd/MM/yyyy' }}</p>
+      </div>
+      <div style="background-color: #f1f5f9; padding: 0.5rem 1rem; border-radius: var(--border-radius-pill); font-weight: 600; color: var(--primary-blue);">
+        {{ pedido.tipo_servicio | titlecase }}
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; background-color: #f8fafc; padding: 1.5rem; border-radius: var(--border-radius-md);">
+      <div>
+        <div style="font-size: 0.85rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem;">Origen</div>
+        <div style="font-weight: 600; color: var(--text-dark);">{{ pedido.origen }}</div>
+      </div>
+      <div>
+        <div style="font-size: 0.85rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem;">Destino</div>
+        <div style="font-weight: 600; color: var(--text-dark);">{{ pedido.destino }}</div>
+      </div>
+      <div *ngIf="pedido.peso_kg > 0">
+        <div style="font-size: 0.85rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem;">Peso</div>
+        <div style="font-weight: 600; color: var(--text-dark);">{{ pedido.peso_kg }} kg</div>
+      </div>
+    </div>
+
+    <h3 style="color: var(--text-dark); margin-bottom: 1.5rem;">Estado Actual: <span style="color: var(--primary-blue);">{{ pedido.estado || 'Pendiente' }}</span></h3>
+    
+    <div class="timeline">
+      <div class="timeline-steps">
+        <div class="step" [class.active]="getStepStatus('pendiente')">
+          <div class="step-icon">📦</div>
+          <span>Recibido</span>
+        </div>
+        <div class="step" [class.active]="getStepStatus('recogido')">
+          <div class="step-icon">🤲</div>
+          <span>Recogido</span>
+        </div>
+        <div class="step" [class.active]="getStepStatus('tránsito')">
+          <div class="step-icon">🚚</div>
+          <span>En Tránsito</span>
+        </div>
+        <div class="step" [class.active]="getStepStatus('destino')">
+          <div class="step-icon">📍</div>
+          <span>En Destino</span>
+        </div>
+        <div class="step" [class.active]="getStepStatus('entregado')">
+          <div class="step-icon">✅</div>
+          <span>Entregado</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,167 @@
+<div>
+  <div class="quote-hero">
+    <h1>Cotización <span>Online</span></h1>
+    <p>Calcula el precio de tu envío al instante</p>
+  </div>
+
+  <div class="main-container">
+    
+    <!-- Panel Izquierdo: Formulario -->
+    <div class="form-card">
+      <div class="card-title">
+        <span>🧮</span> Calcula tu Tarifa
+        <button type="button" class="btn-clear" (click)="limpiar()" *ngIf="resultado || cotizacionForm.dirty">
+          <span>🔄</span> Limpiar
+        </button>
+      </div>
+      
+      <form [formGroup]="cotizacionForm">
+        
+        <div class="form-row">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label>Ciudad de Origen</label>
+            <input type="text" formControlName="origen" placeholder="Ej: Quito" #origenInput>
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label>Ciudad de Destino</label>
+            <input type="text" formControlName="destino" placeholder="Ej: Guayaquil" #destinoInput>
+          </div>
+        </div>
+
+        <app-map-selector 
+          style="display: block; margin-top: 1rem; margin-bottom: 1.5rem;"
+          [setOrigenPlace]="currentOrigenPlace"
+          [setDestinoPlace]="currentDestinoPlace"
+          (origenChange)="onMapOrigenChange($event)"
+          (destinoChange)="onMapDestinoChange($event)">
+        </app-map-selector>
+
+        <div class="form-group" style="margin-top: 1.5rem;">
+          <label>Tipo de Servicio</label>
+          <select formControlName="tipo_servicio">
+            <option value="paqueteria">📦 Envío de Paquetes (x1.0)</option>
+            <option value="express">⚡ Entrega Express (x2.0)</option>
+            <option value="mudanza">🏠 Servicio de Mudanza (x1.5)</option>
+            <option value="carga_pesada">🏗️ Carga Pesada (x1.8)</option>
+            <option value="delivery">🛵 Delivery Local (x1.2)</option>
+            <option value="personas">👥 Transporte de Personas (x0.8)</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label>Distancia (km)</label>
+            <input type="number" formControlName="distancia" min="0" placeholder="Automático" readonly style="background-color: #f1f5f9; cursor: not-allowed; color: #64748b;">
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label>Peso Estimado (kg)</label>
+            <input type="number" formControlName="peso" min="0" placeholder="0">
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Panel Derecho: Información o Resultados -->
+    <div class="info-card">
+      
+      <!-- Si NO hay resultado, mostramos las tarifas estáticas -->
+      <div *ngIf="!resultado">
+        <div class="card-title">
+          <span>ℹ️</span> Nuestras Tarifas
+        </div>
+        
+        <div class="rate-box">
+          <div class="rate-icon">🛣️</div>
+          <div>
+            <div class="rate-title">Por Distancia</div>
+            <div class="rate-desc">$1.50 por kilómetro</div>
+          </div>
+        </div>
+        
+        <div class="rate-box">
+          <div class="rate-icon">⚖️</div>
+          <div>
+            <div class="rate-title">Por Peso</div>
+            <div class="rate-desc">$2.00 por kilogramo</div>
+          </div>
+        </div>
+
+        <div style="font-weight: 700; color: #1e293b; font-size: 0.95rem; margin-top: 1.5rem;">
+          Multiplicadores por Servicio
+        </div>
+        
+        <table class="multiplier-table">
+          <thead>
+            <tr>
+              <th>Servicio</th>
+              <th style="text-align: right;">Multiplicador</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>📦 Paquetería</td>
+              <td style="text-align: right;">x1.0</td>
+            </tr>
+            <tr>
+              <td>🏠 Mudanza</td>
+              <td style="text-align: right;">x1.5</td>
+            </tr>
+            <tr>
+              <td>👥 Personas</td>
+              <td style="text-align: right;">x0.8</td>
+            </tr>
+            <tr>
+              <td>⚡ Express</td>
+              <td style="text-align: right;">x2.0</td>
+            </tr>
+            <tr>
+              <td>🏗️ Carga Pesada</td>
+              <td style="text-align: right;">x1.8</td>
+            </tr>
+            <tr>
+              <td>🛵 Delivery</td>
+              <td style="text-align: right;">x1.2</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Si HAY resultado, mostramos la cotización -->
+      <div *ngIf="resultado" style="animation: fade-in 0.3s ease;">
+        <div class="card-title" style="color: #16a34a;">
+          <span>✅</span> Cotización Lista
+        </div>
+        
+        <div style="text-align: center; color: #64748b; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 1rem;">
+          Precio Total Estimado
+        </div>
+        
+        <div class="result-price">
+          <span style="font-size: 2rem; vertical-align: super; opacity: 0.5;">$</span>
+          {{ resultado.precio_total | number:'1.2-2' }}
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <div class="result-row">
+            <span>Costo por Kilometraje</span>
+            <span style="font-weight: 600;">${{ resultado.precio_distancia | number:'1.2-2' }}</span>
+          </div>
+          <div class="result-row">
+            <span>Costo por Peso</span>
+            <span style="font-weight: 600;">${{ resultado.precio_peso | number:'1.2-2' }}</span>
+          </div>
+          <div class="result-row" style="border-bottom: none; padding-bottom: 0;">
+            <span>Multiplicador de Servicio</span>
+            <span style="font-weight: 600; color: #3b82f6;">x{{ resultado.multiplicador }}</span>
+          </div>
+        </div>
+
+        <button class="btn-submit" style="background-color: #16a34a; margin-top: 2.5rem;">
+          Agendar Envío Ahora
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+</div>

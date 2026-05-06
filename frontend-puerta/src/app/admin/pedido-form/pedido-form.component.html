@@ -1,0 +1,98 @@
+<div class="section-container">
+  <div class="card" style="max-width: 800px; margin: 0 auto;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+      <h2 style="margin: 0; color: var(--primary-dark);">
+        <i style="margin-right: 0.5rem;" class="text-highlight">✨</i> Nuevo Pedido
+      </h2>
+      <a routerLink="/admin/pedidos" class="btn-outline" style="text-decoration: none;">
+        ← Volver
+      </a>
+    </div>
+
+    <div *ngIf="submitError" style="background-color: #fee2e2; color: var(--error); padding: 1rem; border-radius: var(--border-radius-sm); margin-bottom: 1.5rem;">
+      {{ submitError }}
+    </div>
+
+    <form [formGroup]="pedidoForm" (ngSubmit)="onSubmit()">
+      
+      <!-- Sección: Ruta y Servicio -->
+      <div class="form-section">
+        <h3>Ruta y Servicio</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="origen">Origen *</label>
+            <input id="origen" type="text" formControlName="origen" placeholder="Ej. Quito, Av. Amazonas">
+            <span class="error-text" *ngIf="isFieldInvalid('origen')">El origen es obligatorio.</span>
+          </div>
+          
+          <div class="form-group">
+            <label for="destino">Destino *</label>
+            <input id="destino" type="text" formControlName="destino" placeholder="Ej. Guayaquil, Malecón">
+            <span class="error-text" *ngIf="isFieldInvalid('destino')">El destino es obligatorio.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="tipo_servicio">Tipo de Servicio *</label>
+            <select id="tipo_servicio" formControlName="tipo_servicio">
+              <option value="paqueteria">Paquetería Estandar</option>
+              <option value="express">Entrega Express</option>
+              <option value="mudanza">Servicio de Mudanza</option>
+              <option value="carga_pesada">Carga Pesada</option>
+              <option value="delivery">Delivery Local</option>
+              <option value="personas">Transporte de Personas</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="distancia_km">Distancia Estimada (km)</label>
+            <input id="distancia_km" type="number" formControlName="distancia_km" min="0" step="0.1">
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección: Detalles del Paquete -->
+      <div class="form-section">
+        <h3>Detalles de la Carga</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="peso_kg">Peso Estimado (kg)</label>
+            <input id="peso_kg" type="number" formControlName="peso_kg" min="0" step="0.1">
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label for="descripcion">Descripción del Paquete</label>
+            <textarea id="descripcion" formControlName="descripcion" rows="2" placeholder="Ej. Caja frágil con electrónicos..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección: Contactos -->
+      <div class="form-section">
+        <h3>Contactos</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="nombre_remitente">Nombre del Remitente</label>
+            <input id="nombre_remitente" type="text" formControlName="nombre_remitente">
+          </div>
+          <div class="form-group">
+            <label for="telefono_remitente">Teléfono del Remitente</label>
+            <input id="telefono_remitente" type="tel" formControlName="telefono_remitente">
+          </div>
+          <div class="form-group">
+            <label for="nombre_destinatario">Nombre del Destinatario</label>
+            <input id="nombre_destinatario" type="text" formControlName="nombre_destinatario">
+          </div>
+          <div class="form-group">
+            <label for="telefono_destinatario">Teléfono del Destinatario</label>
+            <input id="telefono_destinatario" type="tel" formControlName="telefono_destinatario">
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-primary btn-submit" [disabled]="loading || pedidoForm.invalid" [style.opacity]="(loading || pedidoForm.invalid) ? '0.6' : '1'">
+        {{ loading ? 'Creando pedido...' : 'Registrar Pedido' }}
+      </button>
+
+    </form>
+  </div>
+</div>

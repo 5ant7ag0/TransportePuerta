@@ -1,0 +1,28 @@
+<div class="map-container">
+  <div #mapElement class="map-wrapper"></div>
+  
+  <div style="position: absolute; top: 10px; left: 10px; right: 10px; display: flex; gap: 0.5rem; justify-content: center; z-index: 10;">
+    <button type="button" 
+      (click)="setMode('origen')"
+      [style.background-color]="selectingMode === 'origen' ? '#22c55e' : 'white'"
+      [style.color]="selectingMode === 'origen' ? 'white' : '#334155'"
+      style="border: 1px solid #cbd5e1; padding: 0.5rem 1rem; border-radius: 20px; font-weight: 600; font-size: 0.85rem; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: all 0.2s;">
+      📍 Fijar Origen
+    </button>
+
+    <button type="button" 
+      (click)="setMode('destino')"
+      [style.background-color]="selectingMode === 'destino' ? '#ef4444' : 'white'"
+      [style.color]="selectingMode === 'destino' ? 'white' : '#334155'"
+      style="border: 1px solid #cbd5e1; padding: 0.5rem 1rem; border-radius: 20px; font-weight: 600; font-size: 0.85rem; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: all 0.2s;">
+      📍 Fijar Destino
+    </button>
+  </div>
+
+  <div style="position: absolute; bottom: 10px; left: 10px; right: 10px; background: rgba(255,255,255,0.9); padding: 8px 12px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); font-size: 0.8rem; display: flex; justify-content: center; backdrop-filter: blur(4px);">
+    <span style="display: flex; align-items: center; gap: 0.4rem;">
+      <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: #1e3a8a;"></span>
+      Haz clic en el mapa para establecer ubicaciones, o arrastra los extremos de la ruta.
+    </span>
+  </div>
+</div>

@@ -1,0 +1,70 @@
+<div class="section-container">
+  <div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+      <h2 style="margin: 0; color: var(--primary-dark);">
+        <i style="margin-right: 0.5rem;" class="text-highlight">📦</i> Gestión de Pedidos
+      </h2>
+      <a routerLink="/admin/pedidos/nuevo" class="btn-primary" style="text-decoration: none; display: inline-block;">
+        + Nuevo Pedido
+      </a>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" style="text-align: center; padding: 3rem; color: var(--text-light);">
+      Cargando pedidos...
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error" style="background-color: #fee2e2; color: var(--error); padding: 1rem; border-radius: var(--border-radius-sm); margin-bottom: 1rem;">
+      {{ error }}
+    </div>
+
+    <!-- Data Table -->
+    <div class="table-container" *ngIf="!loading && !error">
+      
+      <div *ngIf="pedidos.length === 0" style="text-align: center; padding: 4rem 0; color: var(--text-light);">
+        <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;">📭</div>
+        No hay pedidos registrados aún.
+      </div>
+
+      <table *ngIf="pedidos.length > 0">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Origen → Destino</th>
+            <th>Servicio</th>
+            <th>Precio</th>
+            <th>Estado</th>
+            <th>Fecha</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of pedidos">
+            <td><strong>{{ p.tracking_code }}</strong></td>
+            <td>
+              <div style="color: var(--text-dark);">{{ p.origen }}</div>
+              <div style="color: var(--text-light); font-size: 0.85rem;">↓ {{ p.destino }}</div>
+            </td>
+            <td>{{ p.tipo_servicio | titlecase }}</td>
+            <td style="font-weight: 600;">${{ p.precio_total | number:'1.2-2' }}</td>
+            <td>
+              <span class="status-badge" [ngClass]="getStatusClass(p.estado)">
+                {{ p.estado }}
+              </span>
+            </td>
+            <td style="color: var(--text-light); font-size: 0.9rem;">
+              {{ p.fecha_creacion | date:'dd/MM/yyyy HH:mm' }}
+            </td>
+            <td>
+              <button class="btn-outline" style="color: var(--primary-blue); border-color: var(--primary-blue); padding: 0.35rem 0.75rem; font-size: 0.85rem;">
+                Ver
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
