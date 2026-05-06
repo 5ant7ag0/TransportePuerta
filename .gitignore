@@ -1,0 +1,23 @@
+# --- PYTHON ---
+__pycache__/
+.venv/
+*.pyc
+*.pyo
+*.pyd
+.env
+
+# --- BASES DE DATOS ---
+# Veo que tienes un 'app.db', ¡no lo subas!
+*.db
+*.sqlite3
+
+# --- FRONTEND (Angular) ---
+# Como tu carpeta se llama 'frontend-puerta', apuntamos ahí
+frontend-puerta/node_modules/
+frontend-puerta/.angular/
+frontend-puerta/dist/
+
+# --- EDITORES Y SISTEMA ---
+.vscode/
+.DS_Store
+Thumbs.db
